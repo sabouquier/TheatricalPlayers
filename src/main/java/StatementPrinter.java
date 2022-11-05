@@ -9,7 +9,6 @@ public class StatementPrinter {
     StringBuffer sb=new StringBuffer(String.format("Statement for %s\n", invoice.customer));
     NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
-    //add static variable for types of plays
     final String TRAGEDY = "tragedy";
     final String COMEDY = "comedy";
 
@@ -38,7 +37,7 @@ public class StatementPrinter {
 
       // add volume credits
       volumeCredits += Math.max(perf.audience - 30, 0);
-      // add extra credit for every ten comedy attendees
+      // add extra credit for every five comedy attendees
       if ("comedy".equals(play.type)) volumeCredits += Math.floor(perf.audience / 5);
 
       // print line for this order
