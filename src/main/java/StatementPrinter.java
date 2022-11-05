@@ -6,8 +6,7 @@ public class StatementPrinter {
   public String print(Invoice invoice, Map<String, Play> plays) {
     int totalAmount = 0;
     int volumeCredits = 0;
-    String result = String.format("Statement for %s\n", invoice.customer);
-    StringBuffer sb=new StringBuffer(result);
+    StringBuffer sb=new StringBuffer(String.format("Statement for %s\n", invoice.customer));
 
     NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -40,15 +39,11 @@ public class StatementPrinter {
 
       // print line for this order
       sb.append(String.format("  %s: %s (%s seats)\n", play.name, frmt.format(thisAmount / 100), perf.audience));
-      //result += String.format("  %s: %s (%s seats)\n", play.name, frmt.format(thisAmount / 100), perf.audience);
       totalAmount += thisAmount;
     }
     sb.append(String.format("Amount owed is %s\n", frmt.format(totalAmount / 100)));
-    //result += String.format("Amount owed is %s\n", frmt.format(totalAmount / 100));
     sb.append(String.format("You earned %s credits\n", volumeCredits));
-    //result += String.format("You earned %s credits\n", volumeCredits);
-    result=sb.toString();
-    return result;
+    return sb.toString();
   }
 
 
