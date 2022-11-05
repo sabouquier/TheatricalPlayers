@@ -8,4 +8,9 @@ public class StatementPrinter {
     Printer pri = new Printer();
     return pri.printToText(invoice, plays); 
   }
+
+  public String printHtml(Invoice invoice, Map<String, Play> plays) {
+    Printer pri = new Printer();
+    return pri.printToHtml(invoice, plays); 
+  }
 }

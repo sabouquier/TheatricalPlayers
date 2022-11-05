@@ -15,10 +15,7 @@ public class Printer {
       Play play = plays.get(perf.playID);
       float thisAmount = 0;
       thisAmount = amount(perf, play);
-      
       volumeCredits += creditUpdate(perf, play);
-      
-
       sb.append(String.format("  %s: %s (%s seats)\n", play.name, frmt.format(thisAmount ), perf.audience));
       totalAmount += thisAmount;
     }
@@ -26,6 +23,43 @@ public class Printer {
     sb.append(String.format("You earned %s credits\n", volumeCredits));
     return sb.toString();
   }
+
+  //printToHtml
+  public String printToHtml(Invoice invoice, Map<String, Play> plays) {
+    float totalAmount = 0;
+    int volumeCredits = 0;
+    StringBuffer sb=new StringBuffer();
+    NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
+    sb.append("<html>");
+    sb.append("<head>");
+    sb.append("<title>Statement</title>");
+    sb.append("<style>");
+    sb.append("table, th, td { border: 1px solid black; }");
+    sb.append("</style>");
+    sb.append("</head>");
+    sb.append("<body>");
+    sb.append(String.format("<h1>Statement for %s</h1>\n", invoice.customer));
+
+    sb.append("<table>\n");
+    sb.append("<tr><th>play</th><th>seats</th><th>cost</th></tr>");
+    for (Performance perf : invoice.performances) {
+      Play play = plays.get(perf.playID);
+      float thisAmount = 0;
+      thisAmount = amount(perf, play);
+      volumeCredits += creditUpdate(perf, play);
+      sb.append(String.format("  <tr><td>%s</td><td>%s</td><td>%s</td></tr>\n", play.name, perf.audience, frmt.format(thisAmount )));
+      totalAmount += thisAmount;
+    }
+    sb.append("</table>\n");
+    sb.append(String.format("<p>Amount owed is <em>%s</em></p>\n", frmt.format(totalAmount )));
+    sb.append(String.format("<p>You earned <em>%s</em> credits</p>\n", volumeCredits));
+    sb.append("</body>");
+    sb.append("</html>");
+    return sb.toString();
+  }
+
+
+
 
   // Updates the value of volumeCredits and makes it easier to modify in the future
   public float creditUpdate(Performance perf, Play play) {
