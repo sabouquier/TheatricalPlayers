@@ -2,6 +2,8 @@ import java.text.NumberFormat;
 import java.util.*;
 
 public class StatementPrinter { 
+  final String TRAGEDY = "tragedy";
+  final String COMEDY = "comedy";
 
   public String print(Invoice invoice, Map<String, Play> plays) {
     float totalAmount = 0;
@@ -14,10 +16,7 @@ public class StatementPrinter {
       float thisAmount = 0;
       thisAmount = amount(perf, play);
       
-      // add volume credits
-      volumeCredits += Math.max(perf.audience - 30, 0);
-      // add extra credit for every five comedy attendees
-      if ("comedy".equals(play.type)) volumeCredits += Math.floor(perf.audience / 5);
+      volumeCredits += creditUpdate(perf, play);
 
       sb.append(String.format("  %s: %s (%s seats)\n", play.name, frmt.format(thisAmount ), perf.audience));
       totalAmount += thisAmount;
@@ -27,10 +26,23 @@ public class StatementPrinter {
     return sb.toString();
   }
 
+  // Updates the value of volumeCredits and makes it easier to modify in the future
+  public float creditUpdate(Performance perf, Play play) {
+    int change = 0;
+    change = Math.max(perf.audience - 30, 0);
+    switch (play.type) {
+      case COMEDY:
+        change += Math.floor(perf.audience / 5);
+        break;
+      default:
+        //do nothing
+    }
+    return change;
+  }
 
+  //Calculates the amount for a performance
   public float amount(Performance perf, Play play){
-    final String TRAGEDY = "tragedy";
-    final String COMEDY = "comedy";
+   
     float thisAmount = 0;
     switch (play.type) {
         case TRAGEDY:
