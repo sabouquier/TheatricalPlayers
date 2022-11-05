@@ -7,21 +7,25 @@ public class StatementPrinter {
     float totalAmount = 0;
     int volumeCredits = 0;
     StringBuffer sb=new StringBuffer(String.format("Statement for %s\n", invoice.customer));
-
     NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
+
+    //add static variable for types of plays
+    final String TRAGEDY = "tragedy";
+    final String COMEDY = "comedy";
+
 
     for (Performance perf : invoice.performances) {
       Play play = plays.get(perf.playID);
       float thisAmount = 0;
 
       switch (play.type) {
-        case "tragedy":
+        case TRAGEDY:
           thisAmount = 400;
           if (perf.audience > 30) {
             thisAmount += 10 * (perf.audience - 30);
           }
           break;
-        case "comedy":
+        case COMEDY:
           thisAmount = 300;
           if (perf.audience > 20) {
             thisAmount += 100 + 5 * (perf.audience - 20);
