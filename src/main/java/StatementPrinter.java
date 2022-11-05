@@ -28,8 +28,7 @@ public class StatementPrinter {
 
   // Updates the value of volumeCredits and makes it easier to modify in the future
   public float creditUpdate(Performance perf, Play play) {
-    int change = 0;
-    change = Math.max(perf.audience - 30, 0);
+    int change = Math.max(perf.audience - 30, 0);
     switch (play.type) {
       case COMEDY:
         change += Math.floor(perf.audience / 5);
