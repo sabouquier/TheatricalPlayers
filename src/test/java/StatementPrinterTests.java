@@ -41,4 +41,7 @@ public class StatementPrinterTests {
             statementPrinter.print(invoice, plays);
         });
     }
+
+    
+
 }
