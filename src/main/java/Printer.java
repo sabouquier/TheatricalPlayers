@@ -41,7 +41,7 @@ public class Printer {
     sb.append(String.format("<h1>Statement for %s</h1>\n", invoice.customer));
 
     sb.append("<table>\n");
-    sb.append("<tr><th>play</th><th>seats</th><th>cost</th></tr>");
+    sb.append("<tr><th>Piece</th><th>Seats sold</th><th>Price</th></tr>");
     for (Performance perf : invoice.performances) {
       Play play = plays.get(perf.playID);
       float thisAmount = 0;
